@@ -101,4 +101,3 @@ if gd.wasOKed():
 	download_url=download_dict[download_file]+'/?i_agree=1&download_now=1'
 	print "Downloading "+download_file+' from url '+download_url+' to '+cmtkgui.install_dir()
 	download_and_untar_url(download_url,download_file,cmtkgui.install_dir())
-	#untar_binaries('/Users/jefferis/test.tar.gz',cmtkgui.install_dir())
