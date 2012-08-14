@@ -158,7 +158,10 @@ def tool_path(tool):
 
 def installed_version():
 	'''Return current version of CMTK installed in Fiji bin dir'''
-	return run_tool_stdout('warpx','--version')
+	ver=run_tool_stdout('warpx','--version')
+	if ver:
+		return ver
+	else: return ""
 
 def run_tool_stdout(tool,args):
 	'''Return stdout after running CMTK tool with args'''
