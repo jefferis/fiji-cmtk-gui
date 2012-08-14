@@ -114,7 +114,7 @@ def os_string():
 		return 'Linux'
 	elif osname.startswith('Mac'):
 		osversion=System.getProperty("os.version")
-		match=re.match(r'10\.([0-9]+)\.[0-9]+',osversion)
+		match=re.match(r'10\.([0-9]+)(\.[0-9])*',osversion)
 		if match==None:
 			sys.exit('Unable to identify OS version: '+osversion)
 		osmajor=match.group(1)
