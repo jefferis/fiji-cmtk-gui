@@ -8,27 +8,41 @@ from fiji.util.gui import GenericDialogPlus
 
 import cmtkgui
 
-def download_and_untar_url(download_url,download_file,target_dir):
+def download_and_untar_url(download_url,target_dir,download_file=None,
+	download_msg=None):
 	'''
 	download file in temporary location
 	untar to target_dir
 	clean up download
 	'''
-	tf=tempfile.NamedTemporaryFile(suffix=download_file)
-	print 'Downloading '+download_url+' to '+ tf.name
+	# open url and set up using header information
 	u = urllib2.urlopen(download_url)
 	headers = u.info()
 	download_size = int(headers['Content-Length'])
+	if download_file == None:
+		if headers.has_key('Content-Disposition'):
+			download_file = re.sub(".*filename=","",headers['Content-Disposition'])
+		else:
+			myErr("No filename specified for download and none in http header!")
+	if download_msg==None:
+		download_msg='Downloading: %s' % (download_file)
+	tf=tempfile.NamedTemporaryFile(suffix=download_file)
+	print 'Downloading '+download_url+' to '+ tf.name
 	print "Download size should be %d" % (download_size)
+
+	# Now for the download
 	block_size=100000
-	bytes_read=0
-	while bytes_read<download_size:
-		IJ.showStatus("Downloading CMTK binaries (%.1f/%.1f Mb)" % 
-			((bytes_read/1000000.0),(download_size/1000000.0)))
-		IJ.showProgress(bytes_read,download_size)
-		tf.file.write(u.read(block_size))
-		bytes_read+=block_size
-	IJ.showProgress(1.0)
+	if download_size>block_size:
+		bytes_read=0
+		while bytes_read<download_size:
+			IJ.showStatus("%s (%.1f/%.1f Mb)" % 
+				(download_msg,(bytes_read/1000000.0),(download_size/1000000.0)))
+			IJ.showProgress(bytes_read,download_size)
+			tf.file.write(u.read(block_size))
+			bytes_read+=block_size
+		IJ.showProgress(1.0)
+	else:
+		tf.file.write(u.read)
 	u.close()
 	tf.file.close()
 	print ('Downloaded file has size %d')%(os.path.getsize(tf.name))
@@ -100,4 +114,4 @@ if gd.wasOKed():
 	# nb url has a suffix to indicate that user agreed to license
 	download_url=download_dict[download_file]+'/?i_agree=1&download_now=1'
 	print "Downloading "+download_file+' from url '+download_url+' to '+cmtkgui.install_dir()
-	download_and_untar_url(download_url,download_file,cmtkgui.install_dir())
+	download_and_untar_url(download_url,cmtkgui.install_dir(),download_file)
