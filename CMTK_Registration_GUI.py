@@ -181,6 +181,9 @@ if action == 'Test': mungeropts+=' -t'
 if verbose: mungeropts+=' -v'
 mungeropts+=' -T %d' % (int(corestouse))
 
+if not outsuffix == '':
+	mungeropts += ' -d .'+outsuffix
+
 cmd='"%s" -b "%s" %s %s %s -s "%s" %s' % (munger,bindir,munger_actions,regparams,mungeropts,refBrain,image)
 print cmd
 
