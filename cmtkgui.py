@@ -274,7 +274,7 @@ def gui_update_available(github_versioninfo=None):
 	if lvi['abbrev_sha1']==github_versioninfo['abbrev_sha1']:
 		return(False)
 	else:
-		 return (False)
+		return(True)
 
 def download_and_untar_url(download_url,target_dir,untarfun,download_file=None,
 	download_msg=None):
