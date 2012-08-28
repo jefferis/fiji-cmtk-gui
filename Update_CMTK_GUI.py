@@ -16,7 +16,7 @@ def untar_github_archive(f,target_dir):
 	code folder not the github pax_global_header file
 	'''
 	tar=tarfile.open(f)
-	print("Extracting tar file")
+	IJ.showStatus("Extracting tar file %s" % (os.path.basename(f)))
 	td=tempfile.mkdtemp()
 	try:
 		tar.extractall(path=td)
@@ -60,6 +60,6 @@ gd.addMessage('Currently installed CMTK GUI version: '+installed_version)
 gd.showDialog()
 if gd.wasOKed():
 	# nb url has a suffix to indicate that user agreed to license
-	print 'Downloading url '+download_url+' to '+cmtkgui.gui_install_dir()
+	IJ.showStatus('Downloading CMTK GUI')
 	cmtkgui.download_and_untar_url(download_url,cmtkgui.gui_install_dir(),untar_github_archive)
 	cmtkgui.gui_write_local_versioninfo(github_version_info)
