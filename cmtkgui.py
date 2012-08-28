@@ -254,10 +254,12 @@ def gui_write_local_versioninfo(versioninfo):
 	CMTK GUI code
 	'''
 	version_file = os.path.join(gui_install_dir(),"CMTKGUIVersion.csv")
-	with open(version_file, "w") as myfile:
-		w = csv.writer(myfile)
-		for key, val in versioninfo.items():
-			w.writerow([key, val])
+	myfile = open(version_file, "w")
+	
+	w = csv.writer(myfile)
+	for key, val in versioninfo.items():
+		w.writerow([key, val])
+	myfile.close()
 
 def gui_update_available(github_versioninfo=None):
 	'''
