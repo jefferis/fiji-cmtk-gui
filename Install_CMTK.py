@@ -2,54 +2,11 @@
 Download appropriate CMTK binary archive and install to fiji bin/cmtk directory
 '''
 
-import urllib2,os,sys,tempfile,tarfile,shutil
+import urllib2,os,sys,tarfile,shutil
 
 from fiji.util.gui import GenericDialogPlus
 
 import cmtkgui
-
-def download_and_untar_url(download_url,target_dir,download_file=None,
-	download_msg=None):
-	'''
-	download file in temporary location
-	untar to target_dir
-	clean up download
-	'''
-	# open url and set up using header information
-	u = urllib2.urlopen(download_url)
-	headers = u.info()
-	download_size = int(headers['Content-Length'])
-	if download_file == None:
-		if headers.has_key('Content-Disposition'):
-			download_file = re.sub(".*filename=","",headers['Content-Disposition'])
-		else:
-			myErr("No filename specified for download and none in http header!")
-	if download_msg==None:
-		download_msg='Downloading: %s' % (download_file)
-	tf=tempfile.NamedTemporaryFile(suffix=download_file)
-	print 'Downloading '+download_url+' to '+ tf.name
-	print "Download size should be %d" % (download_size)
-
-	# Now for the download
-	block_size=100000
-	if download_size>block_size:
-		bytes_read=0
-		while bytes_read<download_size:
-			IJ.showStatus("%s (%.1f/%.1f Mb)" % 
-				(download_msg,(bytes_read/1000000.0),(download_size/1000000.0)))
-			IJ.showProgress(bytes_read,download_size)
-			tf.file.write(u.read(block_size))
-			bytes_read+=block_size
-		IJ.showProgress(1.0)
-	else:
-		tf.file.write(u.read)
-	u.close()
-	tf.file.close()
-	print ('Downloaded file has size %d')%(os.path.getsize(tf.name))
-	IJ.showStatus("Extracting tar file and installing CMTK")
-	untar_binaries(tf.name,target_dir)
-	IJ.showStatus('Cleaning up!')
-	tf.close()
 
 def bin_files(members):
 	'''
@@ -73,7 +30,7 @@ def license_files(members):
 def untar_binaries(f,target_dir):
 	'''
 	untar binary files in a subfolder bin of tarfile f
-	moving them from a temporay location to a final location in target_dir
+	moving them from a temporary location to a final location in target_dir
 	target_dir is created if it does not already exist
 	'''
 	tar=tarfile.open(f)
@@ -114,4 +71,4 @@ if gd.wasOKed():
 	# nb url has a suffix to indicate that user agreed to license
 	download_url=download_dict[download_file]+'/?i_agree=1&download_now=1'
 	print "Downloading "+download_file+' from url '+download_url+' to '+cmtkgui.install_dir()
-	download_and_untar_url(download_url,cmtkgui.install_dir(),download_file)
+	cmtkgui.download_and_untar_url(download_url,cmtkgui.install_dir(),untar_binaries,download_file)

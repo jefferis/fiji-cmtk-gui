@@ -2,7 +2,7 @@
 cmtkgui module containing helper functions for Fiji CMTK GUI
 '''
 import os, sys, time
-import subprocess, re, urllib2
+import subprocess, re, urllib2, tempfile
 
 from ij.gui import GenericDialog
 from ij import IJ
@@ -211,3 +211,45 @@ def update_available():
 	elif l[1]<r[1]: return True
 	elif l[2]<r[2]: return True
 	else: return False
+
+def download_and_untar_url(download_url,target_dir,untarfun,download_file=None,
+	download_msg=None):
+	'''
+	download file in temporary location
+	untar to target_dir using untarfun
+	clean up download
+	'''
+	# open url and set up using header information
+	u = urllib2.urlopen(download_url)
+	headers = u.info()
+	download_size = int(headers['Content-Length'])
+	if download_file == None:
+		if headers.has_key('Content-Disposition'):
+			download_file = re.sub(".*filename=","",headers['Content-Disposition'])
+		else:
+			myErr("No filename specified for download and none in http header!")
+	if download_msg==None:
+		download_msg='Downloading: %s' % (download_file)
+	tf=tempfile.NamedTemporaryFile(suffix=download_file)
+	print 'Downloading '+download_url+' to '+ tf.name
+	print "Download size should be %d" % (download_size)
+
+	# Now for the download
+	block_size=100000
+	if download_size>block_size:
+		bytes_read=0
+		while bytes_read<download_size:
+			IJ.showStatus("%s (%.1f/%.1f Mb)" % 
+				(download_msg,(bytes_read/1000000.0),(download_size/1000000.0)))
+			IJ.showProgress(bytes_read,download_size)
+			tf.file.write(u.read(block_size))
+			bytes_read+=block_size
+		IJ.showProgress(1.0)
+	else:
+		tf.file.write(u.read)
+	u.close()
+	tf.file.close()
+	print ('Downloaded file has size %d')%(os.path.getsize(tf.name))
+	untarfun(tf.name,target_dir)
+	IJ.showStatus('Cleaning up!')
+	tf.close()
