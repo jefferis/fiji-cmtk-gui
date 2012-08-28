@@ -271,7 +271,7 @@ def gui_update_available(github_versioninfo=None):
 		return True
 	if github_versioninfo is None:
 		github_versioninfo=gui_github_versioninfo()
-	if lvi['abbrev_sha1']==gvi['abbrev_sha1']:
+	if lvi['abbrev_sha1']==github_versioninfo['abbrev_sha1']:
 		return(False)
 	else:
 		 return (False)
