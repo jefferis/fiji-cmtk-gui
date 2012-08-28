@@ -246,7 +246,7 @@ def download_and_untar_url(download_url,target_dir,untarfun,download_file=None,
 			bytes_read+=block_size
 		IJ.showProgress(1.0)
 	else:
-		tf.file.write(u.read)
+		tf.file.write(u.read())
 	u.close()
 	tf.file.close()
 	print ('Downloaded file has size %d')%(os.path.getsize(tf.name))
