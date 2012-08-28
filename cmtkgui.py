@@ -1,12 +1,14 @@
 '''
 cmtkgui module containing helper functions for Fiji CMTK GUI
 '''
-import os, sys, time
+import os, sys, time, csv
 import subprocess, re, urllib2, tempfile
 
 from ij.gui import GenericDialog
 from ij import IJ
 from java.lang import System
+
+gui_tarball_url='https://github.com/jefferis/fiji-cmtk-gui/tarball/master'
 
 def myExit(err):
 	'''Placeholder until I figure out suitable way to break out of jython script'''
@@ -145,6 +147,11 @@ def install_dir():
 	ijdir=IJ.getDirectory('imagej')
 	return os.path.join(ijdir,'bin','cmtk')
 
+def gui_install_dir():
+	'''return sensible location to install CMTK GUI'''
+	pluginsdir=IJ.getDirectory('plugins')
+	return os.path.join(pluginsdir,'Scripts','Plugins','CMTK_Registration')
+
 def bin_dir():
 	'''
 	Return path to cmtk binaries
@@ -211,6 +218,61 @@ def update_available():
 	elif l[1]<r[1]: return True
 	elif l[2]<r[2]: return True
 	else: return False
+
+def gui_github_versioninfo():
+	'''
+	Create a dictionary containing version information for current
+	github code
+	'''
+	try: u = urllib2.urlopen(gui_tarball_url)
+	except IOError, e:
+		myErr("Unable to read github repository")
+	headers = u.info()
+	date = headers['date']
+	size = int(headers['Content-Length'])
+	filename = re.sub(".*filename=","",headers['Content-Disposition'])
+	u.close()
+	abbrev_sha1 = re.sub(".*-([a-f0-9]+).tar.gz","\\1",filename)
+	return {'abbrev_sha1':abbrev_sha1, 'filename':filename, 'date':date, 'size':size}
+
+def gui_local_versioninfo():
+	'''	
+	Read a csv file containing the version information for current
+	CMTK GUI code
+	'''
+	version_file = os.path.join(gui_install_dir(),"CMTKGUIVersion.csv")
+	if not os.path.exists(version_file):
+		return {}
+	versioninfo = {}
+	for key, val in csv.reader(open(version_file)):
+		versioninfo[key] = val
+	return(versioninfo)
+
+def gui_write_local_versioninfo(versioninfo):
+	'''
+	Write a csv file containing the version information for current
+	CMTK GUI code
+	'''
+	version_file = os.path.join(gui_install_dir(),"CMTKGUIVersion.csv")
+	with open(version_file, "w") as myfile:
+		w = csv.writer(myfile)
+		for key, val in versioninfo.items():
+			w.writerow([key, val])
+
+def gui_update_available(github_versioninfo=None):
+	'''
+	Check if an update is available on github
+	optionally using a cached copy of the versioninfo dictionary
+	'''
+	lvi=gui_local_versioninfo()
+	if not lvi.has_key('abbrev_sha1'):
+		return True
+	if github_versioninfo is None:
+		github_versioninfo=gui_github_versioninfo()
+	if lvi['abbrev_sha1']==gvi['abbrev_sha1']:
+		return(False)
+	else:
+		 return (False)
 
 def download_and_untar_url(download_url,target_dir,untarfun,download_file=None,
 	download_msg=None):
