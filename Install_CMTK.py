@@ -2,7 +2,7 @@
 Download appropriate CMTK binary archive and install to fiji bin/cmtk directory
 '''
 
-import urllib2,os,sys,tarfile,shutil
+import urllib2,os,sys,tarfile,shutil,tempfile
 
 from fiji.util.gui import GenericDialogPlus
 
