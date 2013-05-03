@@ -17,6 +17,12 @@ Install
   * (Re)start Fiji
   * Choose **Plugins ... CMTK Registration ... Install CMTK**
 
+Update
+======
+  * To update the code for this GUI, choose `Update CMTK GUI`
+  * To update the CMTK registration software, choose `Install CMTK`
+    * This will compare the current version on the CMTK website with the installed version and offer to update if appropriate.
+
 Use
 ===
   * **CMTK Registration GUI** is the main entry point
