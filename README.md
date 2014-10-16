@@ -10,12 +10,18 @@ Install
   * Download the [zip file](https://github.com/jefferis/fiji-cmtk-gui/zipball/master) for this repository
   * Expand the zip file
   * Rename the newly expanded folder to `CMTK_Registration`
-  * Move this inside the `plugins/Scripts/Plugins` subfolder of Fiji 
+  * Move this inside the `plugins` subfolder of Fiji 
     * To see this folder on a Mac you need to show Fiji in the Finder
     * Then Right Click and choose Show Package Contents
-    * then navigate to the `plugins/Scripts/Plugins` subfolder
+    * then navigate to the `plugins` subfolder
   * (Re)start Fiji
   * Choose **Plugins ... CMTK Registration ... Install CMTK**
+
+Update
+======
+  * To update the code for this GUI, choose `Update CMTK GUI`
+  * To update the CMTK registration software, choose `Install CMTK`
+    * This will compare the current version on the CMTK website with the installed version and offer to update if appropriate.
 
 Use
 ===
