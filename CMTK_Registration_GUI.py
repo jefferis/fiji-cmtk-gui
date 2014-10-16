@@ -6,6 +6,9 @@ from java.lang import Runtime
 
 import os,subprocess,sys
 
+from java.lang.System import getProperty
+sys.path.append(getProperty("fiji.dir") + "/plugins/CMTK_Registration")
+
 from cmtkgui import relpath,makescript,findExecutable
 import cmtkgui
 

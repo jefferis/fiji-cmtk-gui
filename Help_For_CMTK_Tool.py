@@ -1,6 +1,8 @@
 '''Display help for any CMTK tool'''
 from ij.gui import GenericDialog
 from java.awt.event import ItemListener
+from java.lang.System import getProperty
+sys.path.append(getProperty("fiji.dir") + "/plugins/CMTK_Registration")
 import cmtkgui
 import os
 

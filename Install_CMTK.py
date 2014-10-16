@@ -6,6 +6,8 @@ import urllib2,os,sys,tarfile,shutil
 
 from fiji.util.gui import GenericDialogPlus
 
+from java.lang.System import getProperty
+sys.path.append(getProperty("fiji.dir") + "/plugins/CMTK_Registration")
 import cmtkgui
 
 def bin_files(members):

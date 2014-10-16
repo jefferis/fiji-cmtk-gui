@@ -1,4 +1,7 @@
 from ij.gui import GenericDialog
+
+from java.lang.System import getProperty
+sys.path.append(getProperty("fiji.dir") + "/plugins/CMTK_Registration")
 import cmtkgui
 
 gd = GenericDialog('About CMTK GUI')
