@@ -17,10 +17,10 @@ import cmtkgui
 class RegRootListener(TextListener):
 	def textValueChanged(self, tvc):
 		regroot = regrootf.getText()
-		if os.path.exists(regroot):
+		if len(regroot)>0 and os.path.exists(regroot):
 			updateOuputFolders()
 		imgdir = os.path.join(regroot,'images')
-		if lenos.path.exists(imgdir):
+		if os.path.exists(imgdir):
 			imgdirf.setText(imgdir)
 			imgdirf.setForeground(Color.black)
 			statusf.setText('')
