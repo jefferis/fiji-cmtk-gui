@@ -46,7 +46,7 @@ class ImageDirListener(TextListener):
 			#print "regroot:"+regroot+ " exists!" 
 			return
 		imgdir = imgdirf.getText()
-		if os.path.exists(imgdir):
+		if len(imgdir)>0 and os.path.exists(imgdir):
 			regrootf.setText(os.path.dirname(imgdir))
 			return
 
