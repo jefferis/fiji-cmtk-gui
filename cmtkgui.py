@@ -4,7 +4,6 @@ cmtkgui module containing helper functions for Fiji CMTK GUI
 import os, sys, time, csv
 import subprocess, re, urllib2, tempfile
 
-from ij.gui import GenericDialog
 from ij import IJ
 from java.lang import System
 
