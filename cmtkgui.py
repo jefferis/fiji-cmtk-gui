@@ -4,10 +4,6 @@ cmtkgui module containing helper functions for Fiji CMTK GUI
 import os, sys, time, csv
 import subprocess, re, urllib2, tempfile
 
-from ij.gui import GenericDialog
-from ij import IJ
-from java.lang import System
-
 gui_tarball_url='https://github.com/jefferis/fiji-cmtk-gui/tarball/master'
 
 def myExit(err):
@@ -17,6 +13,7 @@ def myExit(err):
 	sys.exit(err)
 
 def myErr(err):
+	from ij import IJ
 	IJ.error(err)
 	myExit(err)
 
@@ -73,8 +70,7 @@ def makescript(cmd,rootdir,outdir):
     if not os.path.exists(outdir): os.mkdir(outdir)
     mtime = time.strftime('%Y-%m-%d_%H.%M.%S')
     suffix='sh'
-    osname=System.getProperty("os.name")
-    if "OS X" in osname:
+    if "MacOSX" in os_string():
         suffix='command'
     filename= "munger_%s.%s" %(mtime,suffix)
     filepath=os.path.join(outdir,filename)
@@ -151,6 +147,7 @@ def recommended_file(files):
 
 def install_dir():
 	'''return sensible location to install cmtk'''
+	from ij import IJ
 	ijdir=IJ.getDirectory('imagej')
 	return os.path.join(ijdir,'bin','cmtk')
 
@@ -327,7 +324,9 @@ def download_and_untar_url(download_url,target_dir,untarfun,download_file=None,
 	tf=tempfile.NamedTemporaryFile(suffix=download_file)
 	print 'Downloading '+download_url+' to '+ tf.name
 	print "Download size should be %d" % (download_size)
-
+	
+	from ij import IJ
+	
 	# Now for the download
 	block_size=100000
 	if download_size>block_size:
