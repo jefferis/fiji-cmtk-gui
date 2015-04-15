@@ -72,8 +72,7 @@ def makescript(cmd,rootdir,outdir):
     if not os.path.exists(outdir): os.mkdir(outdir)
     mtime = time.strftime('%Y-%m-%d_%H.%M.%S')
     suffix='sh'
-    osname=System.getProperty("os.name")
-    if "OS X" in osname:
+    if "MacOSX" in os_string():
         suffix='command'
     filename= "munger_%s.%s" %(mtime,suffix)
     filepath=os.path.join(outdir,filename)
