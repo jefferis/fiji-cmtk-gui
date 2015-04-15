@@ -166,7 +166,23 @@ def bin_dir():
 	'''
 	return install_dir()
 
+def system_cmtk_bin_dir(cmtktool='streamxform'):
 	'''
+	return path to the system folder containing CMTK binaries
+	'''
+	extradirs=('/usr/local/bin', '/opt/local/bin', '/usr/local/lib/cmtk/bin', '/opt/local/lib/cmtk/bin')
+	cmtktoolpath=which(cmtktool)
+	if(cmtktoolpath!=''):
+		return os.path.dirname(cmtktoolpath)
+	cmtkwrapperpath=which("cmtkk")
+	if(cmtkwrapperpath!=''):
+		return os.path.abspath(os.path.join(os.path.dirname(cmtkwrapperpath),"..","lib", "cmtk","bin"))
+	for d in extradirs:
+		cmtktoolpath=os.path.join(d, cmtktool)
+		if os.path.exists(cmtktoolpath):
+			return os.path.dirname(cmtktoolpath)
+	return file_in_dirs(dirs, filename)
+
 def dir_containing_file(dirs, filename):
 	'''
 	return absolute path to directory containing a file
