@@ -27,3 +27,8 @@ Use
 ===
   * **CMTK Registration GUI** is the main entry point
   * See [Jefferis Lab Wiki](http://flybrain.mrc-lmb.cam.ac.uk/dokuwiki/doku.php?id=warping_manual:registration_gui)
+
+Problems
+========
+* If you have trouble please check the list of [previously reported bugs](https://github.com/jefferis/fiji-cmtk-gui/issues?utf8=%E2%9C%93&q=is%3Aissue+label%3Abug). There may already be a solution.
+* See also the [NITRC CMTK User Forum](https://www.nitrc.org/forum/forum.php?forum_id=857)
