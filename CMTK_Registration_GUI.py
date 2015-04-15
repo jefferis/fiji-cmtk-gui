@@ -2,6 +2,7 @@ from fiji.util.gui import GenericDialogPlus
 from java.awt.event import TextListener
 from java.awt.event import ItemListener
 from java.awt import Font
+from java.awt import Color
 from java.lang import Runtime
 
 import os,subprocess,sys
