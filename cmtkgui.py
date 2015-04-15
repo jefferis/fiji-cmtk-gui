@@ -166,6 +166,17 @@ def bin_dir():
 	'''
 	return install_dir()
 
+	'''
+def dir_containing_file(dirs, filename):
+	'''
+	return absolute path to directory containing a file
+	'''
+	for d in dirs:
+		filepath=os.path.join(d, filename)
+		if os.path.exists(filepath):
+			return os.path.abspath(d)
+	return None
+
 def tool_path(tool):
 	'''path to a CMTK tool'''
 	return os.path.join(bin_dir(),tool)
