@@ -111,6 +111,7 @@ def os_string():
 	MacOSX-10.6
 	CYGWIN
 	'''
+	from java.lang import System
 	osname=System.getProperty("os.name")
 
 	if osname.startswith('Windows'):
