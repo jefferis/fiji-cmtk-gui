@@ -18,8 +18,17 @@ import cmtkgui
 class RegRootListener(TextListener):
 	def textValueChanged(self, tvc):
 		regroot = regrootf.getText()
-		if len(regroot)>0 and os.path.exists(regroot):
+		if len(regroot)==0:
+			statusf.setText('')
+			return
+		if os.path.exists(regroot):
+			regrootf.setForeground(Color.black)
 			updateOuputFolders()
+		else:
+			regrootf.setForeground(Color.red)
+			statusf.setText('Please choose valid root directory')
+			statusf.setForeground(Color.red)
+			return
 		imgdir = os.path.join(regroot,'images')
 		if os.path.exists(imgdir):
 			imgdirf.setText(imgdir)
