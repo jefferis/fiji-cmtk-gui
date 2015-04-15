@@ -62,6 +62,7 @@ gd.addMessage('Currently installed CMTK GUI version: '+installed_version)
 gd.showDialog()
 if gd.wasOKed() and update_available:
 	# nb url has a suffix to indicate that user agreed to license
+	from ij import IJ
 	IJ.showStatus('Downloading CMTK GUI')
 	cmtkgui.download_and_untar_url(download_url,cmtkgui.gui_install_dir(),untar_github_archive)
 	cmtkgui.gui_write_local_versioninfo(github_version_info)
