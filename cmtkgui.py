@@ -177,11 +177,7 @@ def system_cmtk_bin_dir(cmtktool='streamxform'):
 	cmtkwrapperpath=which("cmtkk")
 	if(cmtkwrapperpath!=''):
 		return os.path.abspath(os.path.join(os.path.dirname(cmtkwrapperpath),"..","lib", "cmtk","bin"))
-	for d in extradirs:
-		cmtktoolpath=os.path.join(d, cmtktool)
-		if os.path.exists(cmtktoolpath):
-			return os.path.dirname(cmtktoolpath)
-	return file_in_dirs(dirs, filename)
+	return dir_containing_file(extradirs, cmtktool)
 
 def dir_containing_file(dirs, filename):
 	'''
