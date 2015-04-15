@@ -32,7 +32,8 @@ def findExecutable(execname,msg=''):
     '''
     execpath=which(execname)
     if execpath == '' :
-        gd = GenericDialog(msg)
+        import fiji.util.gui.GenericDialogPlus
+        gd = fiji.util.gui.GenericDialogPlus(msg)
         if msg == '' :
             msg="Locate the directory containing program "+execname
         gd.addDirectoryField(msg, "")
