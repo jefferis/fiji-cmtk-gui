@@ -20,11 +20,17 @@ def myErr(err):
 	IJ.error(err)
 	myExit(err)
 
+def which(execname):
+	'''
+	run system which command to locate an executable
+	'''
+	return subprocess.Popen(["which", execname], stdout=subprocess.PIPE).communicate()[0].rstrip()
+
 def findExecutable(execname,msg=''):
     '''
     @return full path to a command using the shell's which function
     '''
-    execpath=subprocess.Popen(["which", execname], stdout=subprocess.PIPE).communicate()[0].rstrip()
+    execpath=which(execname)
     if execpath == '' :
         gd = GenericDialog(msg)
         if msg == '' :
