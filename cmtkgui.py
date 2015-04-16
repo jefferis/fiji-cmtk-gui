@@ -264,6 +264,8 @@ def gui_github_versioninfo():
 		return {'abbrev_sha1':abbrev_sha1, 'filename':filename, 'date':date, 'size':size}
 	except IOError, e:
 		myErr("Unable to read github repository")
+	except :
+		myErr("Trouble parsing github return information")
 
 def gui_local_versioninfo():
 	'''	
