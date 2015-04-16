@@ -3,6 +3,9 @@ cmtkgui module containing helper functions for Fiji CMTK GUI
 '''
 import os, sys, time, csv
 import subprocess, re, urllib2, tempfile
+import platform
+
+is_jython = platform.system()=="Java"
 
 gui_tarball_url='https://github.com/jefferis/fiji-cmtk-gui/tarball/master'
 
