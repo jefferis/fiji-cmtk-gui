@@ -368,3 +368,15 @@ def download_and_untar_url(download_url,target_dir,untarfun,download_file=None,
 	untarfun(tf.name,target_dir)
 	IJ.showStatus('Cleaning up!')
 	tf.close()
+
+def movefile(frompath, todir):
+	'''
+	move a file to a new location (renaming) using Java calls
+	needed because jython shutil.move has bugs
+	'''
+	if is_jython:
+		fromf=java.io.File(frompath)
+		tof=java.io.File(os.path.join(todir,os.path.basename(frompath)))
+		fromf.renameTo(tof)
+	else:
+		shutil.move(frompath, to)
