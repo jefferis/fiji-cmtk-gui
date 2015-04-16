@@ -37,16 +37,17 @@ def untar_binaries(f,target_dir):
 	'''
 	tar=tarfile.open(f)
 	td=tempfile.mkdtemp()
-	print("Extracting tar file")
+
+	cmtkgui.log("Extracting tar file")
 	tar.extractall(path=td,members=bin_files(tar))
 	# now move each binary to where we actually wanted it to go
 	binaries=bin_files(tar)
-	print("Installing binaries to "+target_dir)
+	cmtkgui.log("Installing binaries to "+target_dir)
 	if not os.path.isdir(target_dir):
 		os.makedirs(target_dir)
 	for binary in binaries:
 		frompath = os.path.join(td,binary.name)
-#		print 'from = '+frompath
+		cmtkgui.log('installing from = '+frompath+' to = '+ target_dir)
 		cmtkgui.movefile(frompath,target_dir)
 	print("Cleaning up!")
 	shutil.rmtree(td)
