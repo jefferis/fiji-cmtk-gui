@@ -253,16 +253,17 @@ def gui_github_versioninfo():
 	Create a dictionary containing version information for current
 	github code
 	'''
-	try: u = urllib2.urlopen(gui_tarball_url)
+	try:
+		u = urllib2.urlopen(gui_tarball_url)
+		headers = u.info()
+		date = headers['date']
+		size = int(headers['Content-Length'])
+		filename = re.sub(".*filename=","",headers['Content-Disposition'])
+		u.close()
+		abbrev_sha1 = re.sub(".*-([a-f0-9]+).tar.gz","\\1",filename)
+		return {'abbrev_sha1':abbrev_sha1, 'filename':filename, 'date':date, 'size':size}
 	except IOError, e:
 		myErr("Unable to read github repository")
-	headers = u.info()
-	date = headers['date']
-	size = int(headers['Content-Length'])
-	filename = re.sub(".*filename=","",headers['Content-Disposition'])
-	u.close()
-	abbrev_sha1 = re.sub(".*-([a-f0-9]+).tar.gz","\\1",filename)
-	return {'abbrev_sha1':abbrev_sha1, 'filename':filename, 'date':date, 'size':size}
 
 def gui_local_versioninfo():
 	'''	
