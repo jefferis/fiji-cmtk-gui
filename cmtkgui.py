@@ -7,6 +7,9 @@ import platform
 
 is_jython = platform.system()=="Java"
 
+if(is_jython):
+	import java.io.File
+
 gui_tarball_url='https://github.com/jefferis/fiji-cmtk-gui/tarball/master'
 
 def myExit(err):
@@ -19,6 +22,17 @@ def myErr(err):
 	from ij import IJ
 	IJ.error(err)
 	myExit(err)
+
+def log(msg):
+	'''
+	logger that chooses simple prints or ImageJ log as appropriate
+	'''
+	if is_jython:
+		from ij import IJ
+		if IJ.debugMode:
+			IJ.log(msg)
+	else:
+		print(msg)
 
 def which(execname):
 	'''
