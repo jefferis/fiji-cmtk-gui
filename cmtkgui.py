@@ -30,7 +30,7 @@ def log(msg):
 	if is_jython:
 		from ij import IJ
 		if IJ.debugMode:
-			IJ.log(msg)
+			print(msg)
 	else:
 		print(msg)
 
