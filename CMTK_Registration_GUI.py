@@ -29,26 +29,32 @@ class RegRootListener(TextListener):
 			statusf.setText('Please choose valid root directory')
 			statusf.setForeground(Color.red)
 			return
-		imgdir = os.path.join(regroot,'images')
-		if os.path.exists(imgdir):
+		# check if we already have a sensible images dir - if not, then set
+		imgdir = imgdirf.getText()
+		if len(imgdir)==0 or not os.path.exists(imgdir):
+			imgdir = os.path.join(regroot,'images')
 			imgdirf.setText(imgdir)
-			imgdirf.setForeground(Color.black)
+		else:
 			statusf.setText('')
-			return
-		imgdirf.setForeground(Color.red)
-		statusf.setText('Please choose input image/directory')
-		statusf.setForeground(Color.red)
 
 class ImageDirListener(TextListener):
 	def textValueChanged(self, tvc):
-		regroot = regrootf.getText()
-		if len(regroot)>0 and os.path.exists(regroot):
-			#print "regroot:"+regroot+ " exists!" 
-			return
 		imgdir = imgdirf.getText()
-		if len(imgdir)>0 and os.path.exists(imgdir):
-			regrootf.setText(os.path.dirname(imgdir))
+		# no comment if unset
+		if len(imgdir)==0:
+			statusf.setText('')
 			return
+		# no comment if unset
+		if os.path.exists(imgdir):
+			statusf.setText('')
+			imgdirf.setForeground(Color.black)
+			regroot = regrootf.getText()
+			if len(regroot)==0 or not os.path.exists(regroot):
+				regrootf.setText(os.path.dirname(imgdir))
+		else:
+			imgdirf.setForeground(Color.red)
+			statusf.setText('Please choose valid images directory')
+			statusf.setForeground(Color.red)
 
 class OuputSuffixListener(TextListener):
 	def textValueChanged(self, tvc):
