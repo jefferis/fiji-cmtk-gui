@@ -2,6 +2,7 @@ from fiji.util.gui import GenericDialogPlus
 from java.awt.event import TextListener
 from java.awt.event import ItemListener
 from java.awt import Font
+from java.awt import Color
 from java.lang import Runtime
 
 import os,subprocess,sys
@@ -17,28 +18,43 @@ import cmtkgui
 class RegRootListener(TextListener):
 	def textValueChanged(self, tvc):
 		regroot = regrootf.getText()
-		if len(regroot)>0 and os.path.exists(regroot):
-			updateOuputFolders()
-		imgdir = os.path.join(regroot,'images')
-		if os.path.exists(imgdir):
-			imgdirf.setText(imgdir)
-			imgdirf.setForeground(Color.black)
+		if len(regroot)==0:
 			statusf.setText('')
 			return
-		imgdirf.setForeground(Color.red)
-		statusf.setText('Please choose input image/directory')
-		statusf.setForeground(Color.red)
+		if os.path.exists(regroot):
+			regrootf.setForeground(Color.black)
+			updateOuputFolders()
+		else:
+			regrootf.setForeground(Color.red)
+			statusf.setText('Please choose valid root directory')
+			statusf.setForeground(Color.red)
+			return
+		# check if we already have a sensible images dir - if not, then set
+		imgdir = imgdirf.getText()
+		if len(imgdir)==0 or not os.path.exists(imgdir):
+			imgdir = os.path.join(regroot,'images')
+			imgdirf.setText(imgdir)
+		else:
+			statusf.setText('')
 
 class ImageDirListener(TextListener):
 	def textValueChanged(self, tvc):
-		regroot = regrootf.getText()
-		if len(regroot)>0 and os.path.exists(regroot):
-			#print "regroot:"+regroot+ " exists!" 
-			return
 		imgdir = imgdirf.getText()
-		if os.path.exists(imgdir):
-			regrootf.setText(os.path.dirname(imgdir))
+		# no comment if unset
+		if len(imgdir)==0:
+			statusf.setText('')
 			return
+		# no comment if unset
+		if os.path.exists(imgdir):
+			statusf.setText('')
+			imgdirf.setForeground(Color.black)
+			regroot = regrootf.getText()
+			if len(regroot)==0 or not os.path.exists(regroot):
+				regrootf.setText(os.path.dirname(imgdir))
+		else:
+			imgdirf.setForeground(Color.red)
+			statusf.setText('Please choose valid images directory')
+			statusf.setForeground(Color.red)
 
 class OuputSuffixListener(TextListener):
 	def textValueChanged(self, tvc):
