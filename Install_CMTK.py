@@ -47,7 +47,7 @@ def untar_binaries(f,target_dir):
 	for binary in binaries:
 		frompath = os.path.join(td,binary.name)
 #		print 'from = '+frompath
-		shutil.move(frompath,target_dir)
+		cmtkgui.movefile(frompath,target_dir)
 	print("Cleaning up!")
 	shutil.rmtree(td)
 
