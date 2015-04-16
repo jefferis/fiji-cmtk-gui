@@ -11,4 +11,5 @@ gd.addMessage('CMTK GUI is independently developed by Greg Jefferis and is NOT s
 gd.setCancelLabel("CMTK GUI Web Page")
 gd.showDialog()
 if gd.wasCanceled():
-	BrowserLauncher().run("https://github.com/jefferis/fiji-cmtk-gui")
+	from ij import IJ
+	IJ.runPlugIn("ij.plugin.BrowserLauncher", "https://github.com/jefferis/fiji-cmtk-gui")

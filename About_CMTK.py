@@ -12,4 +12,5 @@ gd.addMessage('CMTK binary directory: '+cmtkgui.bin_dir())
 gd.setCancelLabel("CMTK Web Page")
 gd.showDialog()
 if gd.wasCanceled():
-	BrowserLauncher().run("http://www.nitrc.org/projects/cmtk/")
+	from ij import IJ
+	IJ.runPlugIn("ij.plugin.BrowserLauncher", "http://www.nitrc.org/projects/cmtk/")
