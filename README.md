@@ -48,4 +48,4 @@ Developer Install
 Developer Update
 ================
 
-  * To update the code for this GUI, choose `Update to Developer CMTK GUI`
+  * To update the code for this GUI, choose `Update to Development CMTK GUI`
