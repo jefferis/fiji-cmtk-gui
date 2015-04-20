@@ -173,7 +173,7 @@ def gui_install_dir():
 	'''return sensible location to install CMTK GUI'''
 	from ij import IJ
 	pluginsdir=IJ.getDirectory('plugins')
-	return os.path.join(pluginsdir,'Scripts','Plugins','CMTK_Registration')
+	return os.path.join(pluginsdir,'CMTK_Registration')
 
 def bin_dir():
 	'''
