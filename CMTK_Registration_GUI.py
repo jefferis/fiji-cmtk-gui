@@ -119,7 +119,7 @@ try:
 	print choicef.getSelectedItem()
 
 	# final Action (Test, Run, Write Script)
-	gd.addChoice("Action",["Test","Write Script","Run"],"Write Script")
+	gd.addChoice("Action",["Test","Write Script","Run (Experimental)"],"Write Script")
 	font=Font("SansSerif",Font.BOLD,12)
 
 	# Advanced options
