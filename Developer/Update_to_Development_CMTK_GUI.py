@@ -40,29 +40,32 @@ def untar_github_archive(f,target_dir):
 	
 	shutil.move(os.path.join(td,subdir),target_dir)
 
+try:
+	download_url='https://github.com/jefferis/fiji-cmtk-gui/tarball/master'
+	# check date
+	installed_version='NA'
+	local_version_info=cmtkgui.gui_local_versioninfo()
+	if local_version_info.has_key('date'):
+		installed_version=local_version_info['date']
+	github_version_info=cmtkgui.gui_github_versioninfo()
+	update_available=cmtkgui.gui_update_available(github_version_info)
 
-download_url='https://github.com/jefferis/fiji-cmtk-gui/tarball/master'
-# check date
-installed_version='NA'
-local_version_info=cmtkgui.gui_local_versioninfo()
-if local_version_info.has_key('date'):
-	installed_version=local_version_info['date']
-github_version_info=cmtkgui.gui_github_versioninfo()
-update_available=cmtkgui.gui_update_available(github_version_info)
+	gd = GenericDialogPlus('Update CMTK GUI')
+	if update_available:
+		gd.addMessage('CMTK GUI update available')
+		gd.setOKLabel("Download")
+	else:
+		gd.addMessage('CMTK GUI is up to date')
 
-gd = GenericDialogPlus('Update CMTK GUI')
-if update_available:
-	gd.addMessage('CMTK GUI update available')
-	gd.setOKLabel("Download")
-else:
-	gd.addMessage('CMTK GUI is up to date')
+	gd.addMessage('Currently installed CMTK GUI version: '+installed_version)
 
-gd.addMessage('Currently installed CMTK GUI version: '+installed_version)
-
-gd.showDialog()
-if gd.wasOKed() and update_available:
-	# nb url has a suffix to indicate that user agreed to license
+	gd.showDialog()
+	if gd.wasOKed() and update_available:
+		# nb url has a suffix to indicate that user agreed to license
+		from ij import IJ
+		IJ.showStatus('Downloading CMTK GUI')
+		cmtkgui.download_and_untar_url(download_url,cmtkgui.gui_install_dir(),untar_github_archive)
+		cmtkgui.gui_write_local_versioninfo(github_version_info)
+except SystemExit, e:
 	from ij import IJ
-	IJ.showStatus('Downloading CMTK GUI')
-	cmtkgui.download_and_untar_url(download_url,cmtkgui.gui_install_dir(),untar_github_archive)
-	cmtkgui.gui_write_local_versioninfo(github_version_info)
+	IJ.showStatus(str(e))
