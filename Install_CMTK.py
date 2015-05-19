@@ -50,7 +50,11 @@ def untar_binaries(f,target_dir):
 		cmtkgui.log('installing from = '+frompath+' to = '+ target_dir)
 		cmtkgui.movefile(frompath,target_dir)
 	print("Cleaning up!")
-	shutil.rmtree(td)
+	try:
+		shutil.rmtree(td)
+	except OSError:
+		print("Failed to remove temporary directory: "+td+"\n")
+		pass
 
 download_urls=cmtkgui.downloads()
 # download_urls=['http://www.nitrc.org/frs/download.php/4814/CMTK-2.2.3-CYGWIN-i686.tar.gz', 'http://www.nitrc.org/frs/download.php/4812/CMTK-2.2.3-Linux-x86_64.tar.gz', 'http://www.nitrc.org/frs/download.php/4820/CMTK-2.2.3-MacOSX-10.4-i686.tar.gz', 'http://www.nitrc.org/frs/download.php/4822/CMTK-2.2.3-MacOSX-10.5-x86_64.tar.gz', 'http://www.nitrc.org/frs/download.php/4824/CMTK-2.2.3-MacOSX-10.6-x86_64.tar.gz', 'http://www.nitrc.org/frs/download.php/4604/CMTK-2.2.1-CYGWIN-i686.tar.gz', 'http://www.nitrc.org/frs/download.php/4596/CMTK-2.2.1-Linux-x86_64.tar.gz', 'http://www.nitrc.org/frs/download.php/4608/CMTK-2.2.1-MacOSX-10.4-i686.tar.gz', 'http://www.nitrc.org/frs/download.php/4610/CMTK-2.2.1-MacOSX-10.5-x86_64.tar.gz', 'http://www.nitrc.org/frs/download.php/4611/CMTK-2.2.1-MacOSX-10.6-x86_64.tar.gz']
