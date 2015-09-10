@@ -65,7 +65,7 @@ class RegParamListener(ItemListener):
 		regparamc=choicef.getSelectedItem()
 		regparams=''
 		if regparamc == 'Cachero, Ostrovsky 2010':
-			regparams = "-X 26 -C 8 -G 80 -R 4 -A '--accuracy 0.4' -W '--accuracy 0.4'"
+			regparams = '-X 26 -C 8 -G 80 -R 4 -A "--accuracy 0.4" -W "--accuracy 0.4"'
 		regparamf.setText(regparams)
 		print "Chosen reg params: "+regparamc
 
