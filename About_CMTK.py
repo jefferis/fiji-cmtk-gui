@@ -3,7 +3,6 @@ from ij.gui import GenericDialog
 import sys
 from java.lang.System import getProperty
 sys.path.append(getProperty("fiji.dir") + "/plugins/CMTK_Registration")
-import cmtkgui
 
 gd = GenericDialog('About CMTK')
 gd.addMessage('CMTK Registration suite is open source software released under GPLv3',)
