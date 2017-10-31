@@ -10,7 +10,7 @@ Install
   * Enable the **CMTK Registration** update site (http://sites.imagej.net/Jefferis), 
   by following [these detailed instructions](http://imagej.net/How_to_follow_a_3rd_party_update_site).
     The update window should look something like this:
-     ![Fiji Update Site Dialog](Web Resources/Fiji_CMTK_update_site.png).
+     ![Fiji Update Site Dialog](Web Resources/Fiji_CMTK_update_site.png "Update Site").
   * Run `Plugins>CMTK Registration>Install CMTK` to install CMTK
 
 Use
